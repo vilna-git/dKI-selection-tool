@@ -43,5 +43,54 @@ This project implements a  decision tree with **7+ million distinct pathways** t
   - `weightings.json`: Four weighting schemes
   - `baseline_scheme_scores.json`: Initial scheme ratings
   - `stage3_questions.json`: Clarifying questions with scoring adjustments
+### Decision Logic
 
+```
+Final Score = Σ (adjusted_score × weight × criterion_direction)
+
+where:
+- adjusted_score: baseline ± stage3 adjustments (bounded 1-6)
+- weight: selected from 4 contextual schemes
+- criterion_direction: +1 for positive criteria (A,B,C), -1 for negative (D,E)
+```
+
+## Getting Started
+
+### Prerequisites
+
+- Python 3.8 or higher
+- No external dependencies (uses only standard library)
+
+### Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/vilna-git/dki-assessment-tool.git
+cd dki-assessment-tool
+
+# No additional installation required!
+```
+
+### Usage
+
+#### Run Interactive Assessment
+
+```bash
+python3 assessment.py
+```
+
+Follow the prompts through three stages:
+1. Rank criteria importance (1-5, each used once)
+2. Answer organizational context questions (y/n)
+3. Answer refinement questions (y/n/not sure - max 2 "not sure")
+
+#### Run Monte Carlo Simulation
+
+```bash
+# Default 1000 trials
+python3 montecarlo.py
+
+# Custom trial count
+python3 montecarlo.py --trials 5000
+```
 
