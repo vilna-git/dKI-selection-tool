@@ -14,6 +14,9 @@ This project implements a  decision tree with **7+ million distinct pathways** t
 6. **Decentralized PKI / Blockchain**
 
 ## Main Features
+- **Dual Interface Support**
+  - Standalone HTML web application
+  - Command-line Python interface for automation
 
 - **Three-Stage Assessment**
   - Stage 1: Criteria ranking (Security, Performance, Software Maturity, Infrastructure Complexity, O&M Complexity)
@@ -56,9 +59,16 @@ where:
 
 ## Getting Started
 
-### Prerequisites
 
-- Python 3.8 or higher
+### Options to Use
+
+**Option1: Web Interface (Recommended)** 
+- Open `index.html` in any browser
+- No installation required!
+- Instant results with downloadable JSON export
+
+**Option 2: Command Line Interface**
+- Python 3.8 or higher required
 - No external dependencies (uses only standard library)
 
 ### Installation
@@ -66,11 +76,17 @@ where:
 ```bash
 git clone https://github.com/vilna-git/dKI-selection-tool.git
 cd dKI-selection-tool
+
+# For web interface: just open index.html in your browser
 ```
-No additional installation required!
+No additional installation required
 
 
 ### Usage
+
+#### Web Interface (Easiest)
+
+Just open `index.html` in your browser and follow the interactive wizard
 
 #### Run Interactive Assessment
 
@@ -92,4 +108,14 @@ python3 montecarlo.py
 # Custom trial count
 python3 montecarlo.py --trials 5000
 ```
+## Validation Results
+
+Monte Carlo simulation with 1000 trials:
+- **Weighting distribution**: W0(12.5%), W1(12.5%), W2(25%), W3(50%)
+- **Pad wastage bound**: O(d) ≤ W(n,d) ≤ 0.2n + O(d)
+- **All schemes selected**: Validates decision tree balance
+
+---
+
+**Note**: This project gives recommendations based on configurable criteria. Organizations must conduct thorough security assessments before deploying any dKI scheme in production environments.
 
