@@ -64,12 +64,11 @@ where:
 ### Installation
 
 ```bash
-# Clone the repository
 git clone https://github.com/vilna-git/dKI-selection-tool.git
 cd dKI-selection-tool
-
-# No additional installation required!
 ```
+No additional installation required!
+
 
 ### Usage
 
