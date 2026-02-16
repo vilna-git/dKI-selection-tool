@@ -65,8 +65,8 @@ where:
 
 ```bash
 # Clone the repository
-git clone https://github.com/vilna-git/dki-assessment-tool.git
-cd dki-assessment-tool
+git clone https://github.com/vilna-git/dKI-selection-tool.git
+cd dKI-selection-tool
 
 # No additional installation required!
 ```
