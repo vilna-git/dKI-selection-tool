@@ -1,0 +1,1304 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- NYU CSGY 6903 / 4783, Spring 2025, Project 2.6, Oleksandra Kovalenko, Hirod Nazari, Kritika Naidu, and Josh Hoge -->
+
+<head>
+    <meta charset="UTF-8">
+    <title>Digital Key Infrastructure (dKI) Assessment Tool</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 20px;
+            line-height: 1.5;
+            color: #333;
+        }
+
+        .step {
+            display: none;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .active {
+            display: block;
+        }
+
+        .error {
+            color: #d32f2f;
+            font-weight: bold;
+            padding: 10px;
+            background-color: #ffebee;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+
+        .controls {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th,
+        td {
+            padding: 12px 8px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background: #f0f0f0;
+            font-weight: bold;
+        }
+
+        select {
+            width: 100%;
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+
+        button {
+            padding: 10px 15px;
+            margin: 10px 5px 0 0;
+            background-color: #2196f3;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background-color: #0d8bf2;
+        }
+
+        button.secondary {
+            background-color: #757575;
+        }
+
+        button.secondary:hover {
+            background-color: #616161;
+        }
+
+        .top-controls {
+            margin-bottom: 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        pre {
+            background: #f4f4f4;
+            padding: 10px;
+            overflow-x: auto;
+            max-height: 300px;
+            border-radius: 4px;
+        }
+
+        .highlight {
+            background: #e3f2fd;
+        }
+
+        .recommended {
+            background: #e8f5e9;
+            font-weight: bold;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4 {
+            color: #1976d2;
+        }
+
+        .question-container {
+            margin-bottom: 15px;
+        }
+
+        .response-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .response-buttons button {
+            flex: 1;
+        }
+
+        .not-sure-limit {
+            font-style: italic;
+            color: #757575;
+            margin-top: 5px;
+        }
+
+        .progress-indicator {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .progress-step {
+            flex: 1;
+            text-align: center;
+            padding: 10px;
+            background: #e0e0e0;
+            border-right: 1px solid white;
+        }
+
+        .progress-step.active {
+            background: #bbdefb;
+            font-weight: bold;
+        }
+
+        .progress-step.completed {
+            background: #c8e6c9;
+        }
+
+        #jsonOutput {
+            white-space: pre-wrap;
+            font-family: monospace;
+            background: #f5f5f5;
+            padding: 10px;
+            border-radius: 4px;
+            height: 200px;
+            overflow-y: auto;
+        }
+
+        .criteria-info {
+            background: #e1f5fe;
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Digital Key Infrastructure (dKI) Assessment Tool</h1>
+
+    <div class="progress-indicator">
+        <div id="step1-indicator" class="progress-step active">Stage 1: Criteria Ranking</div>
+        <div id="step2-indicator" class="progress-step">Stage 2: Organizational Context</div>
+        <div id="step3-indicator" class="progress-step">Stage 3: Additional Questions</div>
+        <div id="step4-indicator" class="progress-step">Results</div>
+    </div>
+
+    <div class="top-controls">
+        <button id="showMatrixButton" onclick="toggleMatrixTable()">Show/Hide Assessment Matrix</button>
+        <button class="secondary" onclick="clearSession()">Reset Assessment</button>
+    </div>
+
+    <div id="matrixTableContainer" style="display:none;">
+        <h3>dKI Schemes Assessment Matrix</h3>
+        <p>This matrix shows the baseline assessment values for each scheme across the five criteria.</p>
+        <table id="matrixTable">
+            <thead>
+                <tr>
+                    <th>dKI Scheme</th>
+                    <th>Security Assurance (A)</th>
+                    <th>Performance & Scalability (B)</th>
+                    <th>Software Maturity (C)</th>
+                    <th>Infrastructure Complexity (D)</th>
+                    <th>Operations & Maintenance Complexity (E)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Table will be populated by JavaScript -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Stage 1: criteria ranking -->
+    <div id="step-ranking" class="step active">
+        <h2>STAGE 1: Criteria Ranking</h2>
+        <div class="criteria-info">
+            <p>This tool helps select a dKI scheme based on the following criteria:</p>
+            <ul id="criteriaList">
+                <!-- criteria list will be populated by JavaScript -->
+            </ul>
+        </div>
+        <p>Rank the importance of each criterion on a scale of 1-5 (5 being highest).</p>
+        <p><strong>Each ranking may only be used once.</strong></p>
+        <form id="rankingForm">
+            <table id="rankControls">
+                <thead>
+                    <tr>
+                        <th>Criterion</th>
+                        <th>Ranking</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- will be populated by JavaScript -->
+                </tbody>
+            </table>
+            <p id="rankError" class="error" style="display: none;"></p>
+            <div class="controls">
+                <div></div> <!-- empty div for flex spacing -->
+                <button type="submit">Next →</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Stage 2: organizational context questions -->
+    <div id="step-context" class="step">
+        <h2>STAGE 2: Organizational Context</h2>
+        <p>Please answer the following questions about your organization:</p>
+        <div class="question-container">
+            <label>
+                <input type="checkbox" id="ctx1"> My organization has dedicated IT personnel capable of operating and
+                maintaining a complex digital key infrastructure system.
+            </label>
+        </div>
+        <div class="question-container">
+            <label>
+                <input type="checkbox" id="ctx2"> The digital key infrastructure system selected must support more than
+                10,000 users or service more than 10,000 authorizations per minute.
+            </label>
+        </div>
+        <div class="question-container">
+            <label>
+                <input type="checkbox" id="ctx3"> My organization operates in a highly-regulated industry and has legal
+                or statutory requirements regarding information processing.
+            </label>
+        </div>
+        <div class="controls">
+            <button id="ctxPrev" class="secondary">← Back</button>
+            <button id="ctxNext">Next →</button>
+        </div>
+    </div>
+
+    <!-- Stage 3: additional questions -->
+    <div id="step-questions" class="step">
+        <h2>STAGE 3: Additional Questions</h2>
+        <p>Please answer the following questions:</p>
+        <div class="not-sure-limit">You may select 'Not sure' for up to 2 questions. At least 77% of questions must have
+            definite (y/n) answers.</div>
+        <div id="questionContainer"></div>
+        <p id="notSureError" class="error" style="display: none;">Error: You have already selected 'Not sure' for 2
+            questions. Please provide a definite answer.</p>
+        <div class="controls">
+            <button id="questPrev" class="secondary">← Back</button>
+            <button id="questNext" style="display: none;">Next →</button>
+        </div>
+    </div>
+
+    <!-- results -->
+    <div id="step-result" class="step">
+        <h2>Assessment Results</h2>
+        <div id="resultContainer"></div>
+        <h3>Assessment Data</h3>
+        <div id="jsonOutput"></div>
+        <div class="controls">
+            <button id="resultsPrev" class="secondary">← Back to Assessment</button>
+            <button id="downloadResults">Download Results</button>
+        </div>
+    </div>
+
+    <script>
+        // Configuration data - integrated from JSON files
+        const CRITERIA = [
+            { code: "A", name: "Security Assurance" },
+            { code: "B", name: "Performance & Scalability" },
+            { code: "C", name: "Software Maturity" },
+            { code: "D", name: "Infrastructure Complexity" },
+            { code: "E", name: "O&M Complexity" }
+        ];
+
+        const SCHEMES = {
+            "scheme1": "PKI with Certificate Authority",
+            "scheme2": "Identity-Based Encryption",
+            "scheme3": "Zero-Trust Architecture",
+            "scheme4": "Self-Sovereign Identity",
+            "scheme5": "Peer-to-Peer Web-of-Trust",
+            "scheme6": "Decentralized PKI / blockchain"
+        };
+
+        const BASELINE_SCHEME_SCORES = {
+            "scheme1": {
+                "criterionA": 5,
+                "criterionB": 5,
+                "criterionC": 5,
+                "criterionD": 5,
+                "criterionE": 5
+            },
+            "scheme2": {
+                "criterionA": 5,
+                "criterionB": 4,
+                "criterionC": 4,
+                "criterionD": 3,
+                "criterionE": 4
+            },
+            "scheme3": {
+                "criterionA": 6,
+                "criterionB": 4,
+                "criterionC": 4,
+                "criterionD": 5,
+                "criterionE": 5
+            },
+            "scheme4": {
+                "criterionA": 3,
+                "criterionB": 6,
+                "criterionC": 3,
+                "criterionD": 1,
+                "criterionE": 3
+            },
+            "scheme5": {
+                "criterionA": 3,
+                "criterionB": 5,
+                "criterionC": 3,
+                "criterionD": 1,
+                "criterionE": 3
+            },
+            "scheme6": {
+                "criterionA": 2,
+                "criterionB": 6,
+                "criterionC": 3,
+                "criterionD": 3,
+                "criterionE": 3
+            }
+        };
+
+        const WEIGHTINGS = {
+            "weighting0": {
+                "criterionA": 0.3,
+                "criterionB": 0.15,
+                "criterionC": 0.1,
+                "criterionD": 0.2,
+                "criterionE": 0.25
+            },
+            "weighting1": {
+                "criterionA": 0.3,
+                "criterionB": 0.2,
+                "criterionC": 0.25,
+                "criterionD": 0.1,
+                "criterionE": 0.15
+            },
+            "weighting2": {
+                "criterionA": 0.3,
+                "criterionB": 0.25,
+                "criterionC": 0.1,
+                "criterionD": 0.2,
+                "criterionE": 0.15
+            },
+            "weighting3": {
+                "criterionA": 0.3,
+                "criterionB": 0.2,
+                "criterionC": 0.3,
+                "criterionD": 0.1,
+                "criterionE": 0.1
+            }
+        };
+
+        const STAGE3_QUESTIONS = [
+            {
+                "stage3_question_number": 1,
+                "question_text": "Does your organization operate in a heavily regulated environment that demands proven, standards-compliant identity solutions?",
+                "scheme1_adjustments": {
+                    "criterionA": 1,
+                    "criterionB": 0,
+                    "criterionC": 1,
+                    "criterionD": 0,
+                    "criterionE": 0
+                },
+                "scheme2_adjustments": {
+                    "criterionA": -1,
+                    "criterionB": 0,
+                    "criterionC": -1,
+                    "criterionD": 0,
+                    "criterionE": 0
+                },
+                "scheme3_adjustments": {
+                    "criterionA": 0,
+                    "criterionB": 0,
+                    "criterionC": 1,
+                    "criterionD": 0,
+                    "criterionE": 0
+                },
+                "scheme4_adjustments": {
+                    "criterionA": 0,
+                    "criterionB": 0,
+                    "criterionC": -1,
+                    "criterionD": 0,
+                    "criterionE": 0
+                },
+                "scheme5_adjustments": {
+                    "criterionA": -1,
+                    "criterionB": 0,
+                    "criterionC": -1,
+                    "criterionD": 0,
+                    "criterionE": 0
+                },
+                "scheme6_adjustments": {
+                    "criterionA": 0,
+                    "criterionB": 0,
+                    "criterionC": -1,
+                    "criterionD": 0,
+                    "criterionE": 0
+                }
+            },
+            {
+                "stage3_question_number": 2,
+                "question_text": "Does your organization need to avoid any single trusted authority or key escrow in your identity system (i.e.= prefer a decentralized trust model)?",
+                "scheme1_adjustments": {
+                    "criterionA": -1,
+                    "criterionB": 0,
+                    "criterionC": 0,
+                    "criterionD": 0,
+                    "criterionE": 0
+                },
+                "scheme2_adjustments": {
+                    "criterionA": -1,
+                    "criterionB": 0,
+                    "criterionC": 0,
+                    "criterionD": 0,
+                    "criterionE": 0
+                },
+                "scheme3_adjustments": {
+                    "criterionA": -1,
+                    "criterionB": 0,
+                    "criterionC": 0,
+                    "criterionD": 1,
+                    "criterionE": 0
+                },
+                "scheme4_adjustments": {
+                    "criterionA": 1,
+                    "criterionB": 0,
+                    "criterionC": 0,
+                    "criterionD": -1,
+                    "criterionE": 0
+                },
+                "scheme5_adjustments": {
+                    "criterionA": 1,
+                    "criterionB": 0,
+                    "criterionC": 0,
+                    "criterionD": -1,
+                    "criterionE": 0
+                },
+                "scheme6_adjustments": {
+                    "criterionA": 1,
+                    "criterionB": 0,
+                    "criterionC": 0,
+                    "criterionD": -1,
+                    "criterionE": 0
+                }
+            },
+            {
+                "stage3_question_number": 3,
+                "question_text": "Does your organization expect end-users to manage their own keys and identities, rather than having a central administrator managing keys?",
+                "scheme1_adjustments": {
+                    "criterionA": 0,
+                    "criterionB": 0,
+                    "criterionC": 0,
+                    "criterionD": 0,
+                    "criterionE": 0
+                },
+                "scheme2_adjustments": {
+                    "criterionA": 0,
+                    "criterionB": 0,
+                    "criterionC": 0,
+                    "criterionD": 1,
+                    "criterionE": 1
+                },
+                "scheme3_adjustments": {
+                    "criterionA": 0,
+                    "criterionB": 0,
+                    "criterionC": 0,
+                    "criterionD": 1,
+                    "criterionE": 1
+                },
+                "scheme4_adjustments": {
+                    "criterionA": 0,
+                    "criterionB": 0,
+                    "criterionC": 0,
+                    "criterionD": -1,
+                    "criterionE": -1
+                },
+                "scheme5_adjustments": {
+                    "criterionA": 0,
+                    "criterionB": 0,
+                    "criterionC": 0,
+                    "criterionD": -1,
+                    "criterionE": -1
+                },
+                "scheme6_adjustments": {
+                    "criterionA": 0,
+                    "criterionB": 0,
+                    "criterionC": 0,
+                    "criterionD": -1,
+                    "criterionE": -1
+                }
+            },
+            {
+                "stage3_question_number": 4,
+                "question_text": "Is automated issuance and lifecycle management of credentials/keys critical for your deployment (i.e.= automatic certificate issuance, renewal, revocation, and key rotation)?",
+                "scheme1_adjustments": {
+                    "criterionA": 0,
+                    "criterionB": 1,
+                    "criterionC": 0,
+                    "criterionD": 0,
+                    "criterionE": -1
+                },
+                "scheme2_adjustments": {
+                    "criterionA": 0,
+                    "criterionB": 1,
+                    "criterionC": 0,
+                    "criterionD": 0,
+                    "criterionE": 0
+                },
+                "scheme3_adjustments": {
+                    "criterionA": 0,
+                    "criterionB": 1,
+                    "criterionC": 0,
+                    "criterionD": 0,
+                    "criterionE": -1
+                },
+                "scheme4_adjustments": {
+                    "criterionA": 0,
+                    "criterionB": 0,
+                    "criterionC": 0,
+                    "criterionD": 0,
+                    "criterionE": 1
+                },
+                "scheme5_adjustments": {
+                    "criterionA": 0,
+                    "criterionB": -1,
+                    "criterionC": 0,
+                    "criterionD": 0,
+                    "criterionE": 1
+                },
+                "scheme6_adjustments": {
+                    "criterionA": 0,
+                    "criterionB": 1,
+                    "criterionC": 0,
+                    "criterionD": 0,
+                    "criterionE": 0
+                }
+            },
+            {
+                "stage3_question_number": 5,
+                "question_text": "Will your organization need to support a very large number of identity transactions (i.e.= millions of users or devices, frequent authentications)?",
+                "scheme1_adjustments": {
+                    "criterionA": 0,
+                    "criterionB": 1,
+                    "criterionC": 0,
+                    "criterionD": 0,
+                    "criterionE": 0
+                },
+                "scheme2_adjustments": {
+                    "criterionA": 0,
+                    "criterionB": -1,
+                    "criterionC": 0,
+                    "criterionD": 0,
+                    "criterionE": 0
+                },
+                "scheme3_adjustments": {
+                    "criterionA": 0,
+                    "criterionB": 1,
+                    "criterionC": 0,
+                    "criterionD": 0,
+                    "criterionE": 0
+                },
+                "scheme4_adjustments": {
+                    "criterionA": 0,
+                    "criterionB": -1,
+                    "criterionC": 0,
+                    "criterionD": 0,
+                    "criterionE": 0
+                },
+                "scheme5_adjustments": {
+                    "criterionA": 0,
+                    "criterionB": -1,
+                    "criterionC": 0,
+                    "criterionD": 0,
+                    "criterionE": 0
+                },
+                "scheme6_adjustments": {
+                    "criterionA": 0,
+                    "criterionB": 0,
+                    "criterionC": 0,
+                    "criterionD": 0,
+                    "criterionE": 0
+                }
+            },
+            {
+                "stage3_question_number": 6,
+                "question_text": "Is minimizing new infrastructure deployment a high priority for your organization (i.e.= you prefer a solution with as little additional server or network overhead as possible)?",
+                "scheme1_adjustments": {
+                    "criterionA": 0,
+                    "criterionB": 0,
+                    "criterionC": 0,
+                    "criterionD": 1,
+                    "criterionE": 0
+                },
+                "scheme2_adjustments": {
+                    "criterionA": 0,
+                    "criterionB": 0,
+                    "criterionC": 0,
+                    "criterionD": 1,
+                    "criterionE": 0
+                },
+                "scheme3_adjustments": {
+                    "criterionA": 0,
+                    "criterionB": 0,
+                    "criterionC": 0,
+                    "criterionD": 1,
+                    "criterionE": 0
+                },
+                "scheme4_adjustments": {
+                    "criterionA": 0,
+                    "criterionB": 0,
+                    "criterionC": 0,
+                    "criterionD": -1,
+                    "criterionE": 0
+                },
+                "scheme5_adjustments": {
+                    "criterionA": 0,
+                    "criterionB": 0,
+                    "criterionC": 0,
+                    "criterionD": -1,
+                    "criterionE": 0
+                },
+                "scheme6_adjustments": {
+                    "criterionA": 0,
+                    "criterionB": 0,
+                    "criterionC": 0,
+                    "criterionD": -1,
+                    "criterionE": 0
+                }
+            },
+            {
+                "stage3_question_number": 7,
+                "question_text": "Does your organization's use cases require strong, vetted identity proof (e.g. verified legal identity or government-issued attributes), as opposed to purely self-asserted identities?",
+                "scheme1_adjustments": {
+                    "criterionA": 1,
+                    "criterionB": 0,
+                    "criterionC": 0,
+                    "criterionD": 0,
+                    "criterionE": 1
+                },
+                "scheme2_adjustments": {
+                    "criterionA": 1,
+                    "criterionB": 0,
+                    "criterionC": 0,
+                    "criterionD": 0,
+                    "criterionE": 0
+                },
+                "scheme3_adjustments": {
+                    "criterionA": 1,
+                    "criterionB": 0,
+                    "criterionC": 1,
+                    "criterionD": 0,
+                    "criterionE": 0
+                },
+                "scheme4_adjustments": {
+                    "criterionA": -1,
+                    "criterionB": 0,
+                    "criterionC": 0,
+                    "criterionD": 0,
+                    "criterionE": -1
+                },
+                "scheme5_adjustments": {
+                    "criterionA": -1,
+                    "criterionB": 0,
+                    "criterionC": -1,
+                    "criterionD": 0,
+                    "criterionE": 0
+                },
+                "scheme6_adjustments": {
+                    "criterionA": -1,
+                    "criterionB": 0,
+                    "criterionC": -1,
+                    "criterionD": 0,
+                    "criterionE": -1
+                }
+            },
+            {
+                "stage3_question_number": 8,
+                "question_text": "Is the ability to recover or revoke keys/credentials easily and quickly (i.e.= lost or compromised) important to your organization?",
+                "scheme1_adjustments": {
+                    "criterionA": 0,
+                    "criterionB": 0,
+                    "criterionC": 0,
+                    "criterionD": 0,
+                    "criterionE": 0
+                },
+                "scheme2_adjustments": {
+                    "criterionA": -1,
+                    "criterionB": 0,
+                    "criterionC": 0,
+                    "criterionD": 0,
+                    "criterionE": -1
+                },
+                "scheme3_adjustments": {
+                    "criterionA": 0,
+                    "criterionB": 0,
+                    "criterionC": 0,
+                    "criterionD": 0,
+                    "criterionE": -1
+                },
+                "scheme4_adjustments": {
+                    "criterionA": 0,
+                    "criterionB": 0,
+                    "criterionC": 0,
+                    "criterionD": 0,
+                    "criterionE": 1
+                },
+                "scheme5_adjustments": {
+                    "criterionA": 0,
+                    "criterionB": 0,
+                    "criterionC": 0,
+                    "criterionD": 0,
+                    "criterionE": 1
+                },
+                "scheme6_adjustments": {
+                    "criterionA": -1,
+                    "criterionB": 0,
+                    "criterionC": 0,
+                    "criterionD": 0,
+                    "criterionE": 1
+                }
+            },
+            {
+                "stage3_question_number": 9,
+                "question_text": "Is a distributed trust model where users can choose who to trust (rather than relying on single authorities) important for your use case?",
+                "scheme1_adjustments": {
+                    "criterionA": -1,
+                    "criterionB": 0,
+                    "criterionC": 0,
+                    "criterionD": 0,
+                    "criterionE": 0
+                },
+                "scheme2_adjustments": {
+                    "criterionA": -1,
+                    "criterionB": 0,
+                    "criterionC": 0,
+                    "criterionD": 0,
+                    "criterionE": 0
+                },
+                "scheme3_adjustments": {
+                    "criterionA": 0,
+                    "criterionB": 0,
+                    "criterionC": 0,
+                    "criterionD": 0,
+                    "criterionE": 0
+                },
+                "scheme4_adjustments": {
+                    "criterionA": 1,
+                    "criterionB": 0,
+                    "criterionC": 0,
+                    "criterionD": 0,
+                    "criterionE": 0
+                },
+                "scheme5_adjustments": {
+                    "criterionA": 1,
+                    "criterionB": 0,
+                    "criterionC": 1,
+                    "criterionD": 0,
+                    "criterionE": 0
+                },
+                "scheme6_adjustments": {
+                    "criterionA": 1,
+                    "criterionB": 0,
+                    "criterionC": 0,
+                    "criterionD": 0,
+                    "criterionE": 0
+                }
+            }
+        ];
+
+        // Application state
+        let state = {
+            criteria_rankings: {},
+            selected_weighting: null,
+            stage2_responses: { 1: false, 2: false, 3: false },
+            stage3_responses: {},
+            adjusted_scores: {},
+            final_scores: {},
+            assessment_aborted: false,
+            current_step: 'step-ranking',
+            current_question: 0,
+            not_sure_count: 0
+        };
+
+        // initialize the application
+        function initializeApp() {
+            // populate criteria list
+            const criteriaList = document.getElementById('criteriaList');
+            CRITERIA.forEach(criteria => {
+                const listItem = document.createElement('li');
+                listItem.textContent = `Criterion ${criteria.code}: ${criteria.name}`;
+                criteriaList.appendChild(listItem);
+            });
+
+            // create ranking controls
+            createRankingControls();
+
+            // populate matrix table
+            populateMatrixTable();
+
+            // add event listeners
+            document.getElementById('rankingForm').addEventListener('submit', handleRankingSubmit);
+            document.getElementById('ctxPrev').addEventListener('click', () => showStep('step-ranking'));
+            document.getElementById('ctxNext').addEventListener('click', handleContextSubmit);
+            document.getElementById('questPrev').addEventListener('click', () => showStep('step-context'));
+            document.getElementById('resultsPrev').addEventListener('click', () => showStep('step-questions'));
+            document.getElementById('downloadResults').addEventListener('click', downloadAssessmentResults);
+
+            // load saved session if exists
+            loadSession();
+        }
+
+        function createRankingControls() {
+            const tbody = document.querySelector('#rankControls tbody');
+            CRITERIA.forEach(({ code, name }) => {
+                const row = document.createElement('tr');
+                const tdLabel = document.createElement('td');
+                tdLabel.textContent = `${name} (${code})`;
+                const tdSelect = document.createElement('td');
+                const sel = document.createElement('select');
+                sel.name = code;
+                sel.innerHTML = '<option value="">--</option>' +
+                    [1, 2, 3, 4, 5].map(v => `<option value="${v}">${v}</option>`).join('');
+                tdSelect.appendChild(sel);
+                row.appendChild(tdLabel);
+                row.appendChild(tdSelect);
+                tbody.appendChild(row);
+            });
+        }
+
+        function populateMatrixTable() {
+            const tbody = document.querySelector('#matrixTable tbody');
+            tbody.innerHTML = '';
+
+            // map scores to text descriptions
+            const scoreToText = {
+                6: "Very High",
+                5: "High",
+                4: "Medium/High",
+                3: "Medium",
+                2: "Medium/Low",
+                1: "Low"
+            };
+
+            Object.entries(SCHEMES).forEach(([schemeKey, schemeName]) => {
+                const row = document.createElement('tr');
+                const tdName = document.createElement('td');
+                tdName.textContent = schemeName;
+                row.appendChild(tdName);
+
+                CRITERIA.forEach(({ code }) => {
+                    const tdScore = document.createElement('td');
+                    const criterionKey = `criterion${code}`;
+                    const numericScore = BASELINE_SCHEME_SCORES[schemeKey][criterionKey];
+                    tdScore.textContent = scoreToText[numericScore];
+                    row.appendChild(tdScore);
+                });
+
+                tbody.appendChild(row);
+            });
+        }
+
+        function showStep(stepId) {
+            // update progress indicators
+            document.querySelectorAll('.progress-step').forEach(el => {
+                el.classList.remove('active');
+                el.classList.remove('completed');
+            });
+
+            // set all previous steps as completed
+            if (stepId === 'step-context') {
+                document.getElementById('step1-indicator').classList.add('completed');
+                document.getElementById('step2-indicator').classList.add('active');
+            } else if (stepId === 'step-questions') {
+                document.getElementById('step1-indicator').classList.add('completed');
+                document.getElementById('step2-indicator').classList.add('completed');
+                document.getElementById('step3-indicator').classList.add('active');
+            } else if (stepId === 'step-result') {
+                document.getElementById('step1-indicator').classList.add('completed');
+                document.getElementById('step2-indicator').classList.add('completed');
+                document.getElementById('step3-indicator').classList.add('completed');
+                document.getElementById('step4-indicator').classList.add('active');
+            } else {
+                document.getElementById('step1-indicator').classList.add('active');
+            }
+
+            // hide all steps and show the current one
+            document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
+            document.getElementById(stepId).classList.add('active');
+
+            state.current_step = stepId;
+
+            // special handling for questions step
+            if (stepId === 'step-questions') {
+                showQuestion(state.current_question);
+            }
+
+            // special handling for results step
+            if (stepId === 'step-result') {
+                if (!state.assessment_aborted) {
+                    calculateFinalScores();
+                }
+                displayResults();
+            }
+
+            saveSession();
+        }
+
+        function handleRankingSubmit(event) {
+            event.preventDefault();
+            const form = new FormData(event.target);
+            const rankings = {};
+            let error = false;
+
+            // collect all rankings
+            CRITERIA.forEach(({ code }) => {
+                const rank = form.get(code);
+                if (!rank) {
+                    error = true;
+                    document.getElementById('rankError').textContent = 'Please select a ranking for all criteria.';
+                    document.getElementById('rankError').style.display = 'block';
+                    return;
+                }
+                rankings[code] = parseInt(rank);
+            });
+
+            if (error) return;
+
+            // check if rankings are unique
+            const uniqueRankings = new Set(Object.values(rankings));
+            if (uniqueRankings.size !== 5) {
+                document.getElementById('rankError').textContent = 'Each ranking may only be used once.';
+                document.getElementById('rankError').style.display = 'block';
+                return;
+            }
+
+            // store rankings and proceed
+            state.criteria_rankings = rankings;
+            document.getElementById('rankError').style.display = 'none';
+            showStep('step-context');
+        }
+
+        function handleContextSubmit() {
+            // get responses from checkboxes
+            state.stage2_responses = {
+                1: document.getElementById('ctx1').checked,
+                2: document.getElementById('ctx2').checked,
+                3: document.getElementById('ctx3').checked
+            };
+
+            // determine which weighting to use based on responses
+            if (!state.stage2_responses[1] && !state.stage2_responses[2] && !state.stage2_responses[3]) {
+                // no yes responses
+                state.selected_weighting = "weighting0";
+            } else if (state.stage2_responses[1] && !state.stage2_responses[2] && !state.stage2_responses[3]) {
+                // yes to question 1 only
+                state.selected_weighting = "weighting1";
+            } else if (state.stage2_responses[2] && !state.stage2_responses[1] && !state.stage2_responses[3]) {
+                // yes to question 2 only
+                state.selected_weighting = "weighting2";
+            } else if (state.stage2_responses[3] && !state.stage2_responses[1] && !state.stage2_responses[2]) {
+                // yes to question 3 only
+                state.selected_weighting = "weighting3";
+            } else if (state.stage2_responses[1] && state.stage2_responses[2] && !state.stage2_responses[3]) {
+                // yes to questions 1 and 2
+                state.selected_weighting = "weighting2";
+            } else if (state.stage2_responses[3] && (state.stage2_responses[1] || state.stage2_responses[2])) {
+                // yes to question 3 and one of questions 1 or 2
+                state.selected_weighting = "weighting3";
+            } else if (state.stage2_responses[1] && state.stage2_responses[2] && state.stage2_responses[3]) {
+                // yes to all three questions
+                state.selected_weighting = "weighting3";
+            }
+
+            // initialize the adjusted scores with baseline scores
+            state.adjusted_scores = JSON.parse(JSON.stringify(BASELINE_SCHEME_SCORES));
+
+            // reset stage 3 data
+            state.stage3_responses = {};
+            state.current_question = 0;
+            state.not_sure_count = 0;
+
+            showStep('step-questions');
+        }
+
+        function showQuestion(questionIndex) {
+            if (questionIndex >= STAGE3_QUESTIONS.length) {
+                // check if enough definite answers
+                const totalQuestions = STAGE3_QUESTIONS.length;
+                const definiteAnswers = Object.values(state.stage3_responses)
+                    .filter(response => response === 'y' || response === 'n').length;
+
+                if (definiteAnswers < Math.floor(0.77 * totalQuestions)) {
+                    // not enough definite answers
+                    state.assessment_aborted = true;
+                    showStep('step-result');
+                    return;
+                }
+
+                // proceed to results
+                state.assessment_aborted = false;
+                showStep('step-result');
+                return;
+            }
+
+            const question = STAGE3_QUESTIONS[questionIndex];
+            const container = document.getElementById('questionContainer');
+            container.innerHTML = `
+                <div class="question-container">
+                    <p><strong>Q${question.stage3_question_number}:</strong> ${question.question_text}</p>
+                    <div class="response-buttons">
+                        <button type="button" onclick="answerQuestion('y')">Yes</button>
+                        <button type="button" onclick="answerQuestion('n')">No</button>
+                        <button type="button" onclick="answerQuestion('not sure')">Not sure</button>
+                    </div>
+                </div>
+            `;
+
+            // hide the next button since responses will automatically advance
+            document.getElementById('questNext').style.display = 'none';
+
+            // hide any previous error
+            document.getElementById('notSureError').style.display = 'none';
+        }
+
+        function answerQuestion(response) {
+            const currentQuestion = STAGE3_QUESTIONS[state.current_question];
+
+            // check if we can accept another "not sure" response
+            if (response === 'not sure') {
+                if (state.not_sure_count >= 2) {
+                    document.getElementById('notSureError').style.display = 'block';
+                    return;
+                }
+                state.not_sure_count++;
+            }
+
+            // record the response
+            state.stage3_responses[currentQuestion.stage3_question_number] = response;
+
+            // apply adjustments if the answer is yes
+            if (response === 'y') {
+                for (let schemeId = 1; schemeId <= 6; schemeId++) {
+                    const schemeKey = `scheme${schemeId}`;
+                    const adjustmentsKey = `${schemeKey}_adjustments`;
+
+                    if (currentQuestion[adjustmentsKey]) {
+                        for (const [criterion, adjustment] of Object.entries(currentQuestion[adjustmentsKey])) {
+                            const currentValue = state.adjusted_scores[schemeKey][criterion];
+                            state.adjusted_scores[schemeKey][criterion] = Math.max(1, Math.min(6, currentValue + adjustment));
+                        }
+                    }
+                }
+            }
+
+            // move to the next question
+            state.current_question++;
+            showQuestion(state.current_question);
+
+            saveSession();
+        }
+
+        function calculateFinalScores() {
+            state.final_scores = {};
+
+            // calculate final weighted scores for each scheme
+            for (let schemeId = 1; schemeId <= 6; schemeId++) {
+                const schemeKey = `scheme${schemeId}`;
+                let weightedScore = 0;
+                const adjustedScores = state.adjusted_scores[schemeKey];
+
+                // calculate the weighted score for each criterion
+                for (const { code } of CRITERIA) {
+                    const criterionKey = `criterion${code}`;
+                    const rawScore = adjustedScores[criterionKey];
+                    const weight = WEIGHTINGS[state.selected_weighting][criterionKey];
+
+                    // for negative criteria (D, E), invert the score (7 - score)
+                    let criterionScore;
+                    if (code === 'D' || code === 'E') {
+                        criterionScore = (7 - rawScore) * weight;
+                    } else {
+                        criterionScore = rawScore * weight;
+                    }
+
+                    weightedScore += criterionScore;
+                }
+
+                state.final_scores[schemeKey] = {
+                    name: SCHEMES[schemeKey],
+                    adjusted_scores: adjustedScores,
+                    weighted_score: weightedScore
+                };
+            }
+        }
+
+        function displayResults() {
+            const container = document.getElementById('resultContainer');
+
+            if (state.assessment_aborted) {
+                container.innerHTML = `
+                    <div class="error">
+                        <h3>ASSESSMENT ABORTED</h3>
+                        <p>The assessment was aborted because you did not provide definite answers (y/n) for at least 77% of Stage 3 questions.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            // rank schemes by weighted score
+            const rankedSchemes = Object.entries(state.final_scores)
+                .sort((a, b) => b[1].weighted_score - a[1].weighted_score);
+
+            // create results HTML
+            let resultsHTML = `
+                <h3>Final Scores (weighted and ranked from highest to lowest):</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Scheme</th>
+                            <th>Score</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+
+            rankedSchemes.forEach(([schemeKey, schemeData], index) => {
+                const rowClass = index === 0 ? 'recommended' : '';
+                resultsHTML += `
+                    <tr class="${rowClass}">
+                        <td>${index + 1}</td>
+                        <td>${schemeData.name}</td>
+                        <td>${schemeData.weighted_score.toFixed(2)}</td>
+                    </tr>
+                `;
+            });
+
+            resultsHTML += `
+                    </tbody>
+                </table>
+                <h3>RECOMMENDED SCHEME: ${rankedSchemes[0][1].name}</h3>
+            `;
+
+            container.innerHTML = resultsHTML;
+
+            // display assessment data as JSON
+            const jsonOutput = document.getElementById('jsonOutput');
+            const assessmentData = {
+                criteria_rankings: state.criteria_rankings,
+                selected_weighting: state.selected_weighting,
+                stage2_responses: state.stage2_responses,
+                stage3_responses: state.stage3_responses,
+                final_scores: state.final_scores,
+                assessment_aborted: state.assessment_aborted
+            };
+
+            jsonOutput.textContent = JSON.stringify(assessmentData, null, 2);
+        }
+
+        function downloadAssessmentResults() {
+            const timestamp = Math.floor(Date.now() / 1000);
+            const filename = `dKI_assessment_${timestamp}.json`;
+
+            // create a blob containing the assessment data
+            const assessmentData = {
+                criteria_rankings: state.criteria_rankings,
+                selected_weighting: state.selected_weighting,
+                stage2_responses: state.stage2_responses,
+                stage3_responses: state.stage3_responses,
+                final_scores: state.final_scores,
+                assessment_aborted: state.assessment_aborted
+            };
+
+            const blob = new Blob([JSON.stringify(assessmentData, null, 4)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+
+            // create a temporary link and trigger the download
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+
+            // clean up
+            setTimeout(() => {
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            }, 0);
+        }
+
+        function toggleMatrixTable() {
+            const container = document.getElementById('matrixTableContainer');
+            if (container.style.display === 'none') {
+                container.style.display = 'block';
+                document.getElementById('showMatrixButton').textContent = 'Hide Assessment Matrix';
+            } else {
+                container.style.display = 'none';
+                document.getElementById('showMatrixButton').textContent = 'Show Assessment Matrix';
+            }
+        }
+
+        function saveSession() {
+            localStorage.setItem('dkiAssessment', JSON.stringify(state));
+        }
+
+        function loadSession() {
+            const saved = localStorage.getItem('dkiAssessment');
+            if (saved) {
+                try {
+                    const savedState = JSON.parse(saved);
+                    state = savedState;
+
+                    // restore rankings in the form
+                    Object.entries(state.criteria_rankings).forEach(([code, rank]) => {
+                        const select = document.querySelector(`select[name="${code}"]`);
+                        if (select) select.value = rank;
+                    });
+
+                    // restore context checkboxes
+                    document.getElementById('ctx1').checked = state.stage2_responses[1];
+                    document.getElementById('ctx2').checked = state.stage2_responses[2];
+                    document.getElementById('ctx3').checked = state.stage2_responses[3];
+
+                    // show the current step
+                    showStep(state.current_step);
+                } catch (e) {
+                    console.error('Error loading saved session:', e);
+                    clearSession();
+                }
+            }
+        }
+
+        function clearSession() {
+            localStorage.removeItem('dkiAssessment');
+            state = {
+                criteria_rankings: {},
+                selected_weighting: null,
+                stage2_responses: { 1: false, 2: false, 3: false },
+                stage3_responses: {},
+                adjusted_scores: {},
+                final_scores: {},
+                assessment_aborted: false,
+                current_step: 'step-ranking',
+                current_question: 0,
+                not_sure_count: 0
+            };
+            window.location.reload();
+        }
+
+        // initialize the application on page load
+        window.onload = initializeApp;
+    </script>
+</body>
+
+</html>

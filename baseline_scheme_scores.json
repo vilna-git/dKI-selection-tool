@@ -1,0 +1,44 @@
+{
+    "scheme1": {
+        "criterionA": 5,
+        "criterionB": 5,
+        "criterionC": 5,
+        "criterionD": 5,
+        "criterionE": 5
+    },
+    "scheme2": {
+        "criterionA": 5,
+        "criterionB": 4,
+        "criterionC": 4,
+        "criterionD": 3,
+        "criterionE": 4
+    },
+    "scheme3": {
+        "criterionA": 6,
+        "criterionB": 4,
+        "criterionC": 4,
+        "criterionD": 5,
+        "criterionE": 5
+    },
+    "scheme4": {
+        "criterionA": 3,
+        "criterionB": 6,
+        "criterionC": 3,
+        "criterionD": 1,
+        "criterionE": 3
+    },
+    "scheme5": {
+        "criterionA": 3,
+        "criterionB": 5,
+        "criterionC": 3,
+        "criterionD": 1,
+        "criterionE": 3
+    },
+    "scheme6": {
+        "criterionA": 2,
+        "criterionB": 6,
+        "criterionC": 3,
+        "criterionD": 3,
+        "criterionE": 3
+    }
+}

@@ -1,0 +1,416 @@
+  [
+    {
+      "stage3_question_number": 1,
+      "question_text": "Does your organization operate in a heavily regulated environment that demands proven, standards-compliant identity solutions?",
+      "scheme1_adjustments": {
+        "criterionA": 1,
+        "criterionB": 0,
+        "criterionC": 1,
+        "criterionD": 0,
+        "criterionE": 0
+      },
+      "scheme2_adjustments": {
+        "criterionA": -1,
+        "criterionB": 0,
+        "criterionC": -1,
+        "criterionD": 0,
+        "criterionE": 0
+      },
+      "scheme3_adjustments": {
+        "criterionA": 0,
+        "criterionB": 0,
+        "criterionC": 1,
+        "criterionD": 0,
+        "criterionE": 0
+      },
+      "scheme4_adjustments": {
+        "criterionA": 0,
+        "criterionB": 0,
+        "criterionC": -1,
+        "criterionD": 0,
+        "criterionE": 0
+      },
+      "scheme5_adjustments": {
+        "criterionA": -1,
+        "criterionB": 0,
+        "criterionC": -1,
+        "criterionD": 0,
+        "criterionE": 0
+      },
+      "scheme6_adjustments": {
+        "criterionA": 0,
+        "criterionB": 0,
+        "criterionC": -1,
+        "criterionD": 0,
+        "criterionE": 0
+      }
+    },
+    {
+      "stage3_question_number": 2,
+      "question_text": "Does your organization need to avoid any single trusted authority or key escrow in your identity system (i.e.= prefer a decentralized trust model)?",
+      "scheme1_adjustments": {
+        "criterionA": -1,
+        "criterionB": 0,
+        "criterionC": 0,
+        "criterionD": 0,
+        "criterionE": 0
+      },
+      "scheme2_adjustments": {
+        "criterionA": -1,
+        "criterionB": 0,
+        "criterionC": 0,
+        "criterionD": 0,
+        "criterionE": 0
+      },
+      "scheme3_adjustments": {
+        "criterionA": -1,
+        "criterionB": 0,
+        "criterionC": 0,
+        "criterionD": 1,
+        "criterionE": 0
+      },
+      "scheme4_adjustments": {
+        "criterionA": 1,
+        "criterionB": 0,
+        "criterionC": 0,
+        "criterionD": -1,
+        "criterionE": 0
+      },
+      "scheme5_adjustments": {
+        "criterionA": 1,
+        "criterionB": 0,
+        "criterionC": 0,
+        "criterionD": -1,
+        "criterionE": 0
+      },
+      "scheme6_adjustments": {
+        "criterionA": 1,
+        "criterionB": 0,
+        "criterionC": 0,
+        "criterionD": -1,
+        "criterionE": 0
+      }
+    },
+    {
+      "stage3_question_number": 3,
+      "question_text": "Does your organization expect end-users to manage their own keys and identities, rather than having a central administrator managing keys?",
+      "scheme1_adjustments": {
+        "criterionA": 0,
+        "criterionB": 0,
+        "criterionC": 0,
+        "criterionD": 0,
+        "criterionE": 0
+      },
+      "scheme2_adjustments": {
+        "criterionA": 0,
+        "criterionB": 0,
+        "criterionC": 0,
+        "criterionD": 1,
+        "criterionE": 1
+      },
+      "scheme3_adjustments": {
+        "criterionA": 0,
+        "criterionB": 0,
+        "criterionC": 0,
+        "criterionD": 1,
+        "criterionE": 1
+      },
+      "scheme4_adjustments": {
+        "criterionA": 0,
+        "criterionB": 0,
+        "criterionC": 0,
+        "criterionD": -1,
+        "criterionE": -1
+      },
+      "scheme5_adjustments": {
+        "criterionA": 0,
+        "criterionB": 0,
+        "criterionC": 0,
+        "criterionD": -1,
+        "criterionE": -1
+      },
+      "scheme6_adjustments": {
+        "criterionA": 0,
+        "criterionB": 0,
+        "criterionC": 0,
+        "criterionD": -1,
+        "criterionE": -1
+      }
+    },
+    {
+      "stage3_question_number": 4,
+      "question_text": "Is automated issuance and lifecycle management of credentials/keys critical for your deployment (i.e.= automatic certificate issuance, renewal, revocation, and key rotation)?",
+      "scheme1_adjustments": {
+        "criterionA": 0,
+        "criterionB": 1,
+        "criterionC": 0,
+        "criterionD": 0,
+        "criterionE": -1
+      },
+      "scheme2_adjustments": {
+        "criterionA": 0,
+        "criterionB": 1,
+        "criterionC": 0,
+        "criterionD": 0,
+        "criterionE": 0
+      },
+      "scheme3_adjustments": {
+        "criterionA": 0,
+        "criterionB": 1,
+        "criterionC": 0,
+        "criterionD": 0,
+        "criterionE": -1
+      },
+      "scheme4_adjustments": {
+        "criterionA": 0,
+        "criterionB": 0,
+        "criterionC": 0,
+        "criterionD": 0,
+        "criterionE": 1
+      },
+      "scheme5_adjustments": {
+        "criterionA": 0,
+        "criterionB": -1,
+        "criterionC": 0,
+        "criterionD": 0,
+        "criterionE": 1
+      },
+      "scheme6_adjustments": {
+        "criterionA": 0,
+        "criterionB": 1,
+        "criterionC": 0,
+        "criterionD": 0,
+        "criterionE": 0
+      }
+    },
+    {
+      "stage3_question_number": 5,
+      "question_text": "Will your organization need to support a very large number of identity transactions (i.e.= millions of users or devices, frequent authentications)?",
+      "scheme1_adjustments": {
+        "criterionA": 0,
+        "criterionB": 1,
+        "criterionC": 0,
+        "criterionD": 0,
+        "criterionE": 0
+      },
+      "scheme2_adjustments": {
+        "criterionA": 0,
+        "criterionB": -1,
+        "criterionC": 0,
+        "criterionD": 0,
+        "criterionE": 0
+      },
+      "scheme3_adjustments": {
+        "criterionA": 0,
+        "criterionB": 1,
+        "criterionC": 0,
+        "criterionD": 0,
+        "criterionE": 0
+      },
+      "scheme4_adjustments": {
+        "criterionA": 0,
+        "criterionB": -1,
+        "criterionC": 0,
+        "criterionD": 0,
+        "criterionE": 0
+      },
+      "scheme5_adjustments": {
+        "criterionA": 0,
+        "criterionB": -1,
+        "criterionC": 0,
+        "criterionD": 0,
+        "criterionE": 0
+      },
+      "scheme6_adjustments": {
+        "criterionA": 0,
+        "criterionB": 0,
+        "criterionC": 0,
+        "criterionD": 0,
+        "criterionE": 0
+      }
+    },
+    {
+      "stage3_question_number": 6,
+      "question_text": "Is minimizing new infrastructure deployment a high priority for your organization (i.e.= you prefer a solution with as little additional server or network overhead as possible)?",
+      "scheme1_adjustments": {
+        "criterionA": 0,
+        "criterionB": 0,
+        "criterionC": 0,
+        "criterionD": 1,
+        "criterionE": 0
+      },
+      "scheme2_adjustments": {
+        "criterionA": 0,
+        "criterionB": 0,
+        "criterionC": 0,
+        "criterionD": 1,
+        "criterionE": 0
+      },
+      "scheme3_adjustments": {
+        "criterionA": 0,
+        "criterionB": 0,
+        "criterionC": 0,
+        "criterionD": 1,
+        "criterionE": 0
+      },
+      "scheme4_adjustments": {
+        "criterionA": 0,
+        "criterionB": 0,
+        "criterionC": 0,
+        "criterionD": -1,
+        "criterionE": 0
+      },
+      "scheme5_adjustments": {
+        "criterionA": 0,
+        "criterionB": 0,
+        "criterionC": 0,
+        "criterionD": -1,
+        "criterionE": 0
+      },
+      "scheme6_adjustments": {
+        "criterionA": 0,
+        "criterionB": 0,
+        "criterionC": 0,
+        "criterionD": -1,
+        "criterionE": 0
+      }
+    },
+    {
+      "stage3_question_number": 7,
+      "question_text": "Does your organization's use cases require strong, vetted identity proof (e.g. verified legal identity or government-issued attributes), as opposed to purely self-asserted identities?",
+      "scheme1_adjustments": {
+        "criterionA": 1,
+        "criterionB": 0,
+        "criterionC": 0,
+        "criterionD": 0,
+        "criterionE": 1
+      },
+      "scheme2_adjustments": {
+        "criterionA": 1,
+        "criterionB": 0,
+        "criterionC": 0,
+        "criterionD": 0,
+        "criterionE": 0
+      },
+      "scheme3_adjustments": {
+        "criterionA": 1,
+        "criterionB": 0,
+        "criterionC": 1,
+        "criterionD": 0,
+        "criterionE": 0
+      },
+      "scheme4_adjustments": {
+        "criterionA": -1,
+        "criterionB": 0,
+        "criterionC": 0,
+        "criterionD": 0,
+        "criterionE": -1
+      },
+      "scheme5_adjustments": {
+        "criterionA": -1,
+        "criterionB": 0,
+        "criterionC": -1,
+        "criterionD": 0,
+        "criterionE": 0
+      },
+      "scheme6_adjustments": {
+        "criterionA": -1,
+        "criterionB": 0,
+        "criterionC": -1,
+        "criterionD": 0,
+        "criterionE": -1
+      }
+    },
+    {
+      "stage3_question_number": 8,
+      "question_text": "Is the ability to recover or revoke keys/credentials easily and quickly (i.e.= lost or compromised) important to your organization?",
+      "scheme1_adjustments": {
+        "criterionA": 0,
+        "criterionB": 0,
+        "criterionC": 0,
+        "criterionD": 0,
+        "criterionE": 0
+      },
+      "scheme2_adjustments": {
+        "criterionA": -1,
+        "criterionB": 0,
+        "criterionC": 0,
+        "criterionD": 0,
+        "criterionE": -1
+      },
+      "scheme3_adjustments": {
+        "criterionA": 0,
+        "criterionB": 0,
+        "criterionC": 0,
+        "criterionD": 0,
+        "criterionE": -1
+      },
+      "scheme4_adjustments": {
+        "criterionA": 0,
+        "criterionB": 0,
+        "criterionC": 0,
+        "criterionD": 0,
+        "criterionE": 1
+      },
+      "scheme5_adjustments": {
+        "criterionA": 0,
+        "criterionB": 0,
+        "criterionC": 0,
+        "criterionD": 0,
+        "criterionE": 1
+      },
+      "scheme6_adjustments": {
+        "criterionA": -1,
+        "criterionB": 0,
+        "criterionC": 0,
+        "criterionD": 0,
+        "criterionE": 1
+      }
+    },
+    {
+      "stage3_question_number": 9,
+      "question_text": "Is a distributed trust model where users can choose who to trust (rather than relying on single authorities) important for your use case?",
+      "scheme1_adjustments": {
+        "criterionA": -1,
+        "criterionB": 0,
+        "criterionC": 0,
+        "criterionD": 0,
+        "criterionE": 0
+      },
+      "scheme2_adjustments": {
+        "criterionA": -1,
+        "criterionB": 0,
+        "criterionC": 0,
+        "criterionD": 0,
+        "criterionE": 0
+      },
+      "scheme3_adjustments": {
+        "criterionA": 0,
+        "criterionB": 0,
+        "criterionC": 0,
+        "criterionD": 0,
+        "criterionE": 0
+      },
+      "scheme4_adjustments": {
+        "criterionA": 1,
+        "criterionB": 0,
+        "criterionC": 0,
+        "criterionD": 0,
+        "criterionE": 0
+      },
+      "scheme5_adjustments": {
+        "criterionA": 1,
+        "criterionB": 0,
+        "criterionC": 1,
+        "criterionD": 0,
+        "criterionE": 0
+      },
+      "scheme6_adjustments": {
+        "criterionA": 1,
+        "criterionB": 0,
+        "criterionC": 0,
+        "criterionD": 0,
+        "criterionE": 0
+      }
+    }
+  ]

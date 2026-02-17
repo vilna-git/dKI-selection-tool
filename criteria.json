@@ -1,0 +1,22 @@
+[
+    {
+        "code": "A",
+        "name": "Security Assurance"
+    },
+    {
+        "code": "B",
+        "name": "Performance & Scalability"
+    },
+    {
+        "code": "C",
+        "name": "Software Maturity"
+    },
+    {
+        "code": "D",
+        "name": "Infrastructure Complexity"
+    },
+    {
+        "code": "E",
+        "name": "O&M Complexity"
+    }
+]

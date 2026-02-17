@@ -1,0 +1,8 @@
+{
+    "scheme1": "PKI with Certificate Authority",
+    "scheme2": "Identity-Based Encryption",
+    "scheme3": "Zero-Trust Architecture",
+    "scheme4": "Self-Sovereign Identity",
+    "scheme5": "Peer-to-Peer Web-of-Trust",
+    "scheme6": "Decentralized PKI / blockchain"
+}

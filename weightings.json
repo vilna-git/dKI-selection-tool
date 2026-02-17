@@ -1,0 +1,30 @@
+{
+    "weighting0": {
+        "criterionA": 0.3,
+        "criterionB": 0.15,
+        "criterionC": 0.1,
+        "criterionD": 0.2,
+        "criterionE": 0.25
+    },
+    "weighting1": {
+        "criterionA": 0.3,
+        "criterionB": 0.2,
+        "criterionC": 0.25,
+        "criterionD": 0.1,
+        "criterionE": 0.15
+    },
+    "weighting2": {
+        "criterionA": 0.3,
+        "criterionB": 0.25,
+        "criterionC": 0.1,
+        "criterionD": 0.2,
+        "criterionE": 0.15
+    },
+    "weighting3": {
+        "criterionA": 0.3,
+        "criterionB": 0.2,
+        "criterionC": 0.3,
+        "criterionD": 0.1,
+        "criterionE": 0.1
+    }
+}
